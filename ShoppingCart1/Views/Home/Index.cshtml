@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model BookDisplayModel
+@{
+    
 }
 
 
@@ -9,7 +10,7 @@
 
   <div class="col-12">
     <label class="visually-hidden" for="inlineFormSelectPref">Genres</label>
-    <select class="form-select" id="inlineFormSelectPref">
+    <select class="form-select" id="genreId" name="genreId">
       <option selected>Choose...</option>
       <option value="1">Action</option>
       <option value="2">Sci fi</option>
@@ -23,7 +24,7 @@
             <label class="visually-hidden" for="inlineFormInputGroupUsername">Search by title</label>
             <div class="input-group">
                 <div class="input-group-text"></div>
-                <input type="text" class="form-control" id="" placeholder="Search by title">
+                <input type="text" class="form-control" id="sterm" name="sterm" placeholder="Search by title">
             </div>
         </div>
 
@@ -40,20 +41,30 @@
 
 <div class="w-100 nt-4 d-flex flex-wrap">
 
-@for (int i = 1; i <= 9; i++
-          )
+@foreach (var book in Model.Books)
+          
 {
     <div class="card mx-2 mb-4" style="width: 16rem;">
-        <img src="..." class="card-img-top" alt="...">
+
+        @if(string.IsNullOrEmpty(book.Image))
+            {
+                <img  src="/css/images/hitler.jpg" class="card - img - top" alt="...">
+            }
+            else
+            {
+                <img src="/css/images/@book.Image" class="card - img - top" alt="...">
+            }
+            
         <div class="card-body">
-            <h5 class="card-title">Book Title</h5>
+            <h5 class="card-title">@book.BookName</h5>
             <p class="card-text">
-             Author :
-             Price :
+                Genre:@book.GenreName<br />
+                    Author :@book.AuthorName<br />
+                    Price :@book.Price<br />
          </p>
             <a href="#" class="btn btn-primary">Add to Cart</a>
         </div>
 
     </div>
 }
-</div> 
+</div>
