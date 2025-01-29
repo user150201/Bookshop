@@ -26,7 +26,9 @@ namespace ShoppingCart1.Controllers
             BookDisplayModel bookModel = new BookDisplayModel
             {
                 Books = books,
-                Genres = (IEnumerable<Book>)genres
+                Genres = genres,
+                STerm=sterm,
+                GenreId=genreId
             };
 
             return View(bookModel);
