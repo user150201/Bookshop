@@ -16,5 +16,7 @@ namespace ShoppingCart1.Models
         
         public bool IsDeleted { get; set; }=false;
 
+        public ICollection<CartDetail>cartDetails { get; set; }
+
     }
 }
