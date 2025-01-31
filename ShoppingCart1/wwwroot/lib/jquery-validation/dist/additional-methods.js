@@ -231,9 +231,9 @@ $.validator.addMethod( "cifES", function( value, element ) {
 	}
 
 	var cifRegEx = new RegExp( /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/gi );
-	var letter  = value.substring( 0, 1 ), // [ T ]
-		number  = value.substring( 1, 8 ), // [ P ][ P ][ N ][ N ][ N ][ N ][ N ]
-		control = value.substring( 8, 9 ), // [ C ]
+	var letter  = value.substring( 0, 1 ),  // [ T ]
+		number  = value.substring( 1, 8 ),  // [ P ][ P ][ N ][ N ][ N ][ N ][ N ]
+		control = value.substring( 8, 9 ),  // [ C ]
 		all_sum = 0,
 		even_sum = 0,
 		odd_sum = 0,
