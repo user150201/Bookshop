@@ -12,9 +12,9 @@
 
 </head>
 <body>
-    
    
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+   
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Book Store</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +48,38 @@
                         </div>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
+                <div class="my-2">
+                    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+
+              <div class="col-12">
+                 <label class="visually-hidden" for="genreId">Genres</label>
+                <select class="form-select" id="genreId" name="genreId">
+                 <option selected>Genre</option>
+                      @foreach(var genre in Model.Genres)
+                              {
+                                       <option selected="@(genre.Id==Model.GenreId)" value="@genre.Id">@genre.GenreName</option>
+    
+                                }
+
+    </select>
+  </div>
+
+        <div class="col-12">
+            <label class="visually-hidden" for="sterm">Search by title</label>
+            <div class="input-group">
+                <div class="input-group-text"></div>
+                <input type="text" class="form-control" value="@Model.STerm" id="sterm" name="sterm" placeholder="Search by title">
+            </div>
+        </div>
+
+
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+</form>
+</div>
 
                 <partial name="_LoginPartial" />
             </div>

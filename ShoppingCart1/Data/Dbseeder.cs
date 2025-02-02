@@ -13,9 +13,15 @@ namespace ShoppingCart1.Data
             var roleMgr = service.GetRequiredService<RoleManager<IdentityRole>>();
 
 
-            //adding some role to db
-            await roleMgr.CreateAsync(new IdentityRole(Role.Admin.ToString()));
-            await roleMgr.CreateAsync(new IdentityRole(Role.User.ToString()));
+            // Check and add roles if they don't exist
+            if (!await roleMgr.RoleExistsAsync(Role.Admin.ToString()))
+            {
+                await roleMgr.CreateAsync(new IdentityRole(Role.Admin.ToString()));
+            }
+            if (!await roleMgr.RoleExistsAsync(Role.User.ToString()))
+            {
+                await roleMgr.CreateAsync(new IdentityRole(Role.User.ToString()));
+            }
 
             // create Admin User
 
@@ -26,13 +32,12 @@ namespace ShoppingCart1.Data
                 EmailConfirmed = true
 
             };
-        
 
-            var userInDb =await userMgr.FindByEmailAsync(admin.Email);
-            if (userInDb is null)
+
+            var result = await userMgr.CreateAsync(admin, "Admin@123");
+            if (result.Succeeded)
             {
-                await userMgr.CreateAsync(admin, "Admin@123");
-                await userMgr.AddToRoleAsync(admin,Role.Admin.ToString());
+                await userMgr.AddToRoleAsync(admin, Role.Admin.ToString());
             }
 
         }
