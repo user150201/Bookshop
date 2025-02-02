@@ -102,7 +102,7 @@ namespace ShoppingCart1.Repository
             return cartItemCount;
         }
     
-            public async Task<IEnumerable<ShoppingCart>> GetUserCart()
+            public async Task<ShoppingCart> GetUserCart()
             {
                 var userId = GetUserId();
                 if (userId == null)
@@ -113,7 +113,7 @@ namespace ShoppingCart1.Repository
                                         .Include(a => a.cartDetails)
                                         .ThenInclude(a => a.Book)
                                         .ThenInclude(a => a.Genre)
-                                        .Where(a => a.UserId == userId).ToListAsync();
+                                        .Where(a => a.UserId == userId).FirstOrDefaultAsync();
                 return shoppingCart;
 
 
@@ -130,7 +130,7 @@ namespace ShoppingCart1.Repository
 
             public async Task<int> GetCartItemCount(string userId = "")
             {
-                if (!string.IsNullOrEmpty(userId))
+                if (string.IsNullOrEmpty(userId))
                 {
                     userId = GetUserId();
                 }

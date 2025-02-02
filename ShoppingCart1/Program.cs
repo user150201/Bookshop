@@ -23,6 +23,28 @@ builder.Services.AddTransient<IHomeRepository, HomeRepositary>();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
 
 var app = builder.Build();
+
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    // Ensure roles exist
+    string[] roleNames = { "User", "Admin" };
+    foreach (var role in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+    // Seed default admin user
+    await Dbseeder.SeedfaultData(scope.ServiceProvider);
+}
+
 //using (var scope = app.Services.CreateScope())
 //{
 //    await Dbseeder.SeedfaultData(scope.ServiceProvider);
